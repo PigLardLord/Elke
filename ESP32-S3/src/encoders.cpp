@@ -34,7 +34,7 @@ void reset_callback(const void * req, void * res) {
   Serial.println("✅ Encoders reset!");
 }
 
-void timer_callback(rcl_timer_t * timer, int64_t last_call_time) {
+void encoder_timer_callback(rcl_timer_t * timer, int64_t last_call_time) {
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {
     msg_left.data = leftTicks;
@@ -63,7 +63,7 @@ void init_encoders(rcl_node_t* node, rclc_executor_t* executor, rclc_support_t* 
 
   // Init timer
   const unsigned int timeout = 100; // ms
-  rclc_timer_init_default(&timer, support, RCL_MS_TO_NS(timeout), timer_callback);
+  rclc_timer_init_default(&timer, support, RCL_MS_TO_NS(timeout), encoder_timer_callback);
 
   // Init service
   rclc_service_init_default(&reset_service, node,

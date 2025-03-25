@@ -7,6 +7,7 @@
 #include "encoders.h"
 #include "cmd_vel.h"
 #include "motors.h"
+#include "wheels_status.h"
 
 rcl_allocator_t allocator;
 rclc_support_t support;
@@ -35,6 +36,7 @@ void setup() {
   // Init modules
   init_encoders(&node, &executor, &support);
   init_cmd_vel_subscription(&node, &executor);
+  init_wheels_status(&node, &executor, &support);
   init_motors();
 
   Serial.println("🚗 micro-ROS differential drive node ready!");
@@ -45,5 +47,6 @@ void loop() {
   float v_left = get_target_velocity_left();
   float v_right = get_target_velocity_right();
   update_motor_pwm(v_left, v_right);
+  update_wheels_status(get_wheels_status());
   delay(10);
 }
