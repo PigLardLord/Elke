@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <std_msgs/msg/u_int8.h>
 #include <rcl/publisher.h>
-#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; (void)temp_rc; }
+#include "ros_utils.h"
 
 const int LEFT_TOUCH_PIN = 7;
 const int RIGHT_TOUCH_PIN = 15;
@@ -21,7 +21,7 @@ void update_status_message() {
   if (digitalRead(RIGHT_TOUCH_PIN) == HIGH) status |= (1 << 2);
 
   status_msg.data = status;
-  RCSOFTCHECK(rcl_publish(&status_pub, &status_msg, NULL));
+  SAFE_PUB(&status_pub, status_msg);
 }
 
 void wheels_status_timer_callback(rcl_timer_t* timer, int64_t last_call_time) {

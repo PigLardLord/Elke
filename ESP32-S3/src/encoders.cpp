@@ -3,7 +3,7 @@
 #include <std_msgs/msg/int32.h>
 #include <std_srvs/srv/empty.h>
 #include <rclc/executor.h>
-#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; (void)temp_rc; }
+#include "ros_utils.h"
 
 const int LEFT_ENCODER_PIN = 8;
 const int RIGHT_ENCODER_PIN = 16;
@@ -40,8 +40,8 @@ void encoder_timer_callback(rcl_timer_t * timer, int64_t last_call_time) {
     msg_left.data = leftTicks;
     msg_right.data = rightTicks;
 
-    RCSOFTCHECK(rcl_publish(&pub_left, &msg_left, NULL));
-    RCSOFTCHECK(rcl_publish(&pub_right, &msg_right, NULL));
+    SAFE_PUB(&pub_left, msg_left);
+    SAFE_PUB(&pub_right, msg_right);
   }
 }
 
