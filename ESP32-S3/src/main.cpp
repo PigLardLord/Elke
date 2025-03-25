@@ -12,23 +12,34 @@ rclc_support_t support;
 rcl_node_t node;
 rclc_executor_t executor;
 
-void setup() {
-  Serial.begin(115200);
-  set_microros_serial_transports(Serial);
-  delay(2000);
-
+void ros_setup() {
   init_ros_base(&allocator, &support, &node, &executor, "diff_drive_node");
-
   init_encoders(&node, &executor, &support);
   init_cmd_vel_subscription(&node, &executor);
   init_motors();
   init_wheels_status(&node, &executor, &support);
+}
+
+void ros_teardown() {
+  RCSOFTCHECK(rclc_executor_fini(&executor));
+  RCSOFTCHECK(rcl_node_fini(&node));
+  RCSOFTCHECK(rclc_support_fini(&support));
+}
+
+void setup() {
+  Serial.begin(115200);
+  set_microros_serial_transports(Serial);
+  ros_setup();
 
   Serial.println("🚀 micro-ROS base setup complete");
 }
 
 void loop() {
-  spin_executor(&executor);
+  
+  if (!is_connected()) {
+    Serial.println("⚠️ Lost connection to micro-ROS agent!");
+    reconnect_micro_ros(ros_teardown, ros_setup);
+  }
 
   update_motor_pwm(get_target_velocity_left(), get_target_velocity_right());
   update_wheels_status(get_wheels_status());
