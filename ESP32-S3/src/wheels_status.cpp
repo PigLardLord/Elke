@@ -40,7 +40,7 @@ void init_wheels_status(rcl_node_t* node, rclc_executor_t* executor, rclc_suppor
     "wheels_status");
     
   const unsigned int timer_period_ms = 200;
-  rclc_timer_init_default(&status_timer, support, RCL_MS_TO_NS(timer_period_ms), wheels_status_timer_callback);
+  rclc_timer_init_default2(&status_timer, support, RCL_MS_TO_NS(timer_period_ms), wheels_status_timer_callback, NULL);
   rclc_executor_add_timer(executor, &status_timer);
 }
 

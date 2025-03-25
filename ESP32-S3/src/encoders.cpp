@@ -63,7 +63,7 @@ void init_encoders(rcl_node_t* node, rclc_executor_t* executor, rclc_support_t* 
 
   // Init timer
   const unsigned int timeout = 100; // ms
-  rclc_timer_init_default(&timer, support, RCL_MS_TO_NS(timeout), encoder_timer_callback);
+  rclc_timer_init_default2(&timer, support, RCL_MS_TO_NS(timeout), encoder_timer_callback, NULL);
 
   // Init service
   rclc_service_init_default(&reset_service, node,
