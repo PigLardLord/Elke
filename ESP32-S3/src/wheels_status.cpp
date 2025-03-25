@@ -5,7 +5,7 @@
 #include "ros_utils.h"
 
 const int LEFT_TOUCH_PIN = 7;
-const int RIGHT_TOUCH_PIN = 15;
+const int RIGHT_TOUCH_PIN = 16;
 
 rcl_publisher_t status_pub;
 std_msgs__msg__UInt8 status_msg;

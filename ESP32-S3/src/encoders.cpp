@@ -6,7 +6,7 @@
 #include "ros_utils.h"
 
 const int LEFT_ENCODER_PIN = 8;
-const int RIGHT_ENCODER_PIN = 16;
+const int RIGHT_ENCODER_PIN = 15;
 
 volatile long leftTicks = 0;
 volatile long rightTicks = 0;
