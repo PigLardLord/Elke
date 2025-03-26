@@ -22,11 +22,8 @@ const float MAX_SPEED_MPS = 0.5f;
 
 void init_motors() {
   // Set up PWM channels
-  ledcSetup(0, PWM_FREQUENCY, PWM_RESOLUTION); // Channel 0 = left
-  ledcSetup(1, PWM_FREQUENCY, PWM_RESOLUTION); // Channel 1 = right
-
-  ledcAttachPin(LEFT_PWM_PIN, 0);
-  ledcAttachPin(RIGHT_PWM_PIN, 1);
+  ledcAttach(0, PWM_FREQUENCY, PWM_RESOLUTION); // Channel 0 = left
+  ledcAttach(1, PWM_FREQUENCY, PWM_RESOLUTION); // Channel 1 = right
 
   // Set direction pins
   pinMode(LEFT_IN1, OUTPUT);
