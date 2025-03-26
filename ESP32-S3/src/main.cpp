@@ -6,11 +6,13 @@
 #include "cmd_vel.h"
 #include "motors.h"
 #include "wheels_status.h"
+#include <HardwareSerial.h>
 
 rcl_allocator_t allocator;
 rclc_support_t support;
 rcl_node_t node;
 rclc_executor_t executor;
+HardwareSerial serial_port(1);
 
 void ros_setup() {
   init_ros_base(&allocator, &support, &node, &executor, "diff_drive_node");
@@ -28,7 +30,10 @@ void ros_teardown() {
 
 void setup() {
   Serial.begin(115200);
-  set_microros_serial_transports(Serial);
+  delay(1000);
+
+  serial_port.begin(115200, SERIAL_8N1, 44, 43); 
+  set_microros_serial_transports(serial_port);
   ros_setup();
 
   Serial.println("🚀 micro-ROS base setup complete");
