@@ -3,7 +3,6 @@
 #include <rcl/rcl.h>
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
-#include <functional>
 
 // Critical check: halt if a ROS function fails
 #define RCCHECK(fn) { rcl_ret_t rc = fn; if (rc != RCL_RET_OK) error_loop(); }
@@ -28,9 +27,6 @@ void init_ros_base(
   const char* node_name,
   size_t executor_handles = 4
 );
-
-void reconnect_micro_ros(std::function<void()> teardown_fn, std::function<void()> setup_fn);
-bool is_connected();
 
 // Spin helper (non-blocking)
 void spin_executor(rclc_executor_t* executor, unsigned int timeout_ms = 100);
