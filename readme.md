@@ -17,7 +17,7 @@
 
 ---
 
-## 🔀 Architecture Overview
+## 🪧️ Architecture Overview
 
 - The **ESP32-S3** handles:
   - Motor control via PWM
@@ -33,7 +33,7 @@
 
 ---
 
-## 🛎️ Communication Interfaces
+## 📮️ Communication Interfaces
 
 | Interface | Type | Description |
 |----------|------|-------------|
@@ -44,11 +44,13 @@
 
 ## 🔌 ESP32 Pin Mapping
 
+> ⚠️ **Note:** GPIO 46 is **input-only** and not recommended for driving outputs. It has been replaced in this table with GPIO 6, which is safe for digital output.
+
 | GPIO | Connected To | Description | Type |
 |------|--------------|-------------|------|
 | 3    | PWM-A (TB6612) | Left motor speed control | PWM out |
 | 9    | AIN1          | Left motor direction 1 | Digital out |
-| 46   | AIN2          | Left motor direction 2 | Digital out |
+| 6    | AIN2 (replaces GPIO 46) | Left motor direction 2 | Digital out |
 | 13   | PWM-B (TB6612) | Right motor speed control | PWM out |
 | 11   | BIN1          | Right motor direction 1 | Digital out |
 | 12   | BIN2          | Right motor direction 2 | Digital out |
@@ -70,7 +72,7 @@
 
 ---
 
-## 📦 External Modules
+## 🛆 External Modules
 
 ### TB6612FNG - Motor Driver
 - Drives both left and right motors with direction and PWM
@@ -99,9 +101,8 @@
 | **Teal** | ULN2803 Control |
 | **Gray** | Fault Lines |
 
----
 
-## 🗋 Motor/Encoder Wire Reference (Xiaomi)
+## 🗏️ Motor/Encoder Wire Reference (Xiaomi)
 
 | Color | Function | Notes |
 |--------|----------|-------|
@@ -131,3 +132,4 @@
 - Power control module with solar extension
 - Expandable battery modules
 - Finalize chassis and PCB design
+

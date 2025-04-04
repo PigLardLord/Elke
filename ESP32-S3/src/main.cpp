@@ -15,26 +15,19 @@ rclc_executor_t executor;
 HardwareSerial serial_port(1);
 
 void setup() {
-  Serial.begin(115200);
+  
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
-
-  serial_port.begin(115200, SERIAL_8N1, 44, 43); 
-  set_microros_serial_transports(serial_port);
-  delay(2000);
-
-  init_ros_base(&allocator, &support, &node, &executor, "diff_drive_node");
-
-  init_encoders(&node, &executor, &support);
-  init_cmd_vel_subscription(&node, &executor);
-  init_motors();
-  init_wheels_status(&node, &executor, &support);
-
-  Serial.println("🚀 micro-ROS base setup complete");
+  digitalWrite(LED_BUILTIN, LOW);
+  Serial.begin(115200);
+  Serial.println("✅ USB serial should work");
+  
 }
 
 void loop() {
-  spin_executor(&executor);
+  // spin_executor(&executor);
 
-  update_motor_pwm(get_target_velocity_left(), get_target_velocity_right());
-  update_wheels_status(get_wheels_status());
+  // update_motor_pwm(get_target_velocity_left(), get_target_velocity_right());
+  // update_wheels_status(get_wheels_status());
 }

@@ -7,7 +7,7 @@ const int LEFT_PWM_PIN  = 13;
 const int RIGHT_PWM_PIN = 3;
 
 const int LEFT_IN1  = 9;
-const int LEFT_IN2  = 46;
+const int LEFT_IN2  = 6;
 const int RIGHT_IN1 = 11;
 const int RIGHT_IN2 = 12;
 const int STBY_PIN  = 10;

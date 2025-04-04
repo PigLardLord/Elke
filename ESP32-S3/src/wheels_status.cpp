@@ -20,6 +20,11 @@ void update_status_message() {
   if (digitalRead(LEFT_TOUCH_PIN) == HIGH)  status |= (1 << 1);
   if (digitalRead(RIGHT_TOUCH_PIN) == HIGH) status |= (1 << 2);
 
+  Serial.printf("Wheels status -> L:%d R:%d Motors:%d\n", 
+    digitalRead(LEFT_TOUCH_PIN), 
+    digitalRead(RIGHT_TOUCH_PIN),
+    last_motor_status);
+
   status_msg.data = status;
   SAFE_PUB(&status_pub, status_msg);
 }
@@ -27,6 +32,7 @@ void update_status_message() {
 void wheels_status_timer_callback(rcl_timer_t* timer, int64_t last_call_time) {
   (void)last_call_time;
   if (timer != NULL) {
+    Serial.println("⏱️ wheels_status_timer_callback triggered");
     update_status_message();
   }
 }
@@ -35,9 +41,9 @@ void init_wheels_status(rcl_node_t* node, rclc_executor_t* executor, rclc_suppor
   pinMode(LEFT_TOUCH_PIN, INPUT_PULLUP);
   pinMode(RIGHT_TOUCH_PIN, INPUT_PULLUP);
 
-  rclc_publisher_init_default(&status_pub, node,
+  RCCHECK(rclc_publisher_init_default(&status_pub, node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, UInt8),
-    "wheels_status");
+    "wheels_status"));
     
   const unsigned int timer_period_ms = 200;
   rclc_timer_init_default2(&status_timer, support, RCL_MS_TO_NS(timer_period_ms), wheels_status_timer_callback, NULL);
