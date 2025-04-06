@@ -3,7 +3,6 @@
 
 void error_loop() {
   while (true) {
-    Serial.println("❌ ERROR: Halting in error_loop()");
     delay(500);
   }
 }

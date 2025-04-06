@@ -32,7 +32,6 @@ void update_status_message() {
 void wheels_status_timer_callback(rcl_timer_t* timer, int64_t last_call_time) {
   (void)last_call_time;
   if (timer != NULL) {
-    Serial.println("⏱️ wheels_status_timer_callback triggered");
     update_status_message();
   }
 }
