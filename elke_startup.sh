@@ -85,11 +85,4 @@ log "💬 Starting ollama run elke-gemma..."
 nohup ollama run elke-gemma --format json --system "<idle>" >> "$LOG_FILE" 2>&1 &
 sleep 5
 
-# 🧠 Start ROS 2 AI bridge node
-log "🚀 Starting ROS 2 AI bridge node..."
-source /opt/ros/jazzy/setup.bash
-source /home/master/Elke/ros2_ws/install/setup.bash
-nohup ros2 run elke_ai elke_ai_bridge >> /home/master/elke_ai_bridge.log 2>&1 &
-log "✅ ROS 2 node launched in background."
-
 log "✅ ELKE Startup Script completed."

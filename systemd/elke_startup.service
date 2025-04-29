@@ -1,0 +1,16 @@
+[Unit]
+Description=Avvio automatico di ELKE Robot e ROS 2 Bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=master
+ExecStart=/home/master/Elke/elke_startup.sh
+WorkingDirectory=/home/master/Elke
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
