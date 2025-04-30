@@ -1,0 +1,40 @@
+running egg_info
+creating ../../build/audio/audio.egg-info
+writing ../../build/audio/audio.egg-info/PKG-INFO
+writing dependency_links to ../../build/audio/audio.egg-info/dependency_links.txt
+writing requirements to ../../build/audio/audio.egg-info/requires.txt
+writing top-level names to ../../build/audio/audio.egg-info/top_level.txt
+writing manifest file '../../build/audio/audio.egg-info/SOURCES.txt'
+reading manifest file '../../build/audio/audio.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../build/audio/audio.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/master/Elke/ros2_ws/build/audio/build
+creating /home/master/Elke/ros2_ws/build/audio/build/lib
+creating /home/master/Elke/ros2_ws/build/audio/build/lib/audio
+copying audio/stt_whisper_node.py -> /home/master/Elke/ros2_ws/build/audio/build/lib/audio
+copying audio/__init__.py -> /home/master/Elke/ros2_ws/build/audio/build/lib/audio
+copying audio/elke_listener.py -> /home/master/Elke/ros2_ws/build/audio/build/lib/audio
+copying audio/voice_session_manager.py -> /home/master/Elke/ros2_ws/build/audio/build/lib/audio
+running install
+running install_lib
+creating /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio
+copying /home/master/Elke/ros2_ws/build/audio/build/lib/audio/stt_whisper_node.py -> /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio
+copying /home/master/Elke/ros2_ws/build/audio/build/lib/audio/__init__.py -> /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio
+copying /home/master/Elke/ros2_ws/build/audio/build/lib/audio/elke_listener.py -> /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio
+copying /home/master/Elke/ros2_ws/build/audio/build/lib/audio/voice_session_manager.py -> /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio
+byte-compiling /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio/stt_whisper_node.py to stt_whisper_node.cpython-312.pyc
+byte-compiling /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio/elke_listener.py to elke_listener.cpython-312.pyc
+byte-compiling /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio/voice_session_manager.py to voice_session_manager.cpython-312.pyc
+running install_data
+creating /home/master/Elke/ros2_ws/install/audio/share/ament_index
+creating /home/master/Elke/ros2_ws/install/audio/share/ament_index/resource_index
+creating /home/master/Elke/ros2_ws/install/audio/share/ament_index/resource_index/packages
+copying resource/audio -> /home/master/Elke/ros2_ws/install/audio/share/ament_index/resource_index/packages
+copying package.xml -> /home/master/Elke/ros2_ws/install/audio/share/audio
+running install_egg_info
+Copying ../../build/audio/audio.egg-info to /home/master/Elke/ros2_ws/install/audio/lib/python3.12/site-packages/audio-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/master/Elke/ros2_ws/build/audio/install.log'
