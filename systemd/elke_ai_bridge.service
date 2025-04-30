@@ -1,6 +1,7 @@
 [Unit]
 Description=ELKE ROS 2 AI Bridge Node
-After=network.target
+After=network-online.target ollama.service
+Requires=network-online.target ollama.service
 
 [Service]
 Type=simple
@@ -9,8 +10,9 @@ WorkingDirectory=/home/master/Elke
 Environment="RMW_IMPLEMENTATION=rmw_fastrtps_cpp"
 ExecStart=/bin/bash -c 'source /opt/ros/jazzy/setup.bash && source /home/master/Elke/ros2_ws/install/setup.bash && ros2 run elke_ai elke_ai_bridge'
 Restart=on-failure
+RestartSec=3
 StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target graphical.target

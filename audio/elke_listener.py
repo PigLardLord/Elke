@@ -1,44 +1,46 @@
 # audio/wakeword/elke_listener.py
 
+### elke_voice/wake_listener_node.py
+
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
 import pvporcupine
 import pyaudio
 import struct
-import os
 
-def main():
-    keyword_path = os.path.join(os.path.dirname(__file__), "elke_raspberry-pi.ppn")
+class WakeWordListener(Node):
+    def __init__(self):
+        super().__init__('wake_listener')
+        self.publisher_ = self.create_publisher(String, '/wake_word_detected', 10)
 
-    porcupine = pvporcupine.create(
-        keyword_paths=["./elke_raspberry-pi.ppn"]
-    ) 
-      
-    pa = pyaudio.PyAudio()
+        self.porcupine = pvporcupine.create(keywords=['hey-elke_it_raspberry-pi_v3_0_0'])
+        self.audio = pyaudio.PyAudio()
+        self.stream = self.audio.open(
+            rate=self.porcupine.sample_rate,
+            channels=1,
+            format=pyaudio.paInt16,
+            input=True,
+            frames_per_buffer=self.porcupine.frame_length)
 
-    stream = pa.open(
-        rate=porcupine.sample_rate,
-        channels=1,
-        format=pyaudio.paInt16,
-        input=True,
-        frames_per_buffer=porcupine.frame_length
-    )
+        self.get_logger().info('🔉 Wake word listener started...')
+        self.timer = self.create_timer(0.1, self.listen_loop)
 
-    print("🎤 In ascolto... Pronuncia 'Elke' per attivare il robot.")
+    def listen_loop(self):
+        pcm = self.stream.read(self.porcupine.frame_length, exception_on_overflow=False)
+        pcm = struct.unpack_from("h" * self.porcupine.frame_length, pcm)
+        keyword_index = self.porcupine.process(pcm)
 
-    try:
-        while True:
-            pcm = stream.read(porcupine.frame_length, exception_on_overflow=False)
-            pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
+        if keyword_index >= 0:
+            msg = String()
+            msg.data = 'hey elke'
+            self.publisher_.publish(msg)
+            self.get_logger().info('🎤 Wake word detected!')
 
-            if porcupine.process(pcm) >= 0:
-                print("🔔 Wake word 'Elke' rilevata!")
-                # Qui potrai avviare la pipeline STT o pubblicare un messaggio ROS
-    except KeyboardInterrupt:
-        print("🛑 Interrotto manualmente.")
-    finally:
-        stream.stop_stream()
-        stream.close()
-        pa.terminate()
-        porcupine.delete()
 
-if __name__ == "__main__":
-    main()
+def main(args=None):
+    rclpy.init(args=args)
+    node = WakeWordListener()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
