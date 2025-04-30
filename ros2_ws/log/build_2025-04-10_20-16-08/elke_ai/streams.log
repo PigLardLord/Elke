@@ -1,0 +1,17 @@
+[0.400s] Invoking command in '/home/master/Elke/ros2_ws/build/elke_ai': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/master/Elke/ros2_ws/build/elke_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/master/Elke/ros2_ws/install/elke_ai/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/master/Elke/ros2_ws/build/elke_ai/build --no-deps symlink_data
+[0.565s] running develop
+[0.662s] running egg_info
+[0.670s] writing elke_ai.egg-info/PKG-INFO
+[0.671s] writing dependency_links to elke_ai.egg-info/dependency_links.txt
+[0.671s] writing entry points to elke_ai.egg-info/entry_points.txt
+[0.671s] writing requirements to elke_ai.egg-info/requires.txt
+[0.671s] writing top-level names to elke_ai.egg-info/top_level.txt
+[0.688s] reading manifest file 'elke_ai.egg-info/SOURCES.txt'
+[0.688s] writing manifest file 'elke_ai.egg-info/SOURCES.txt'
+[0.698s] running build_ext
+[0.698s] Creating /home/master/Elke/ros2_ws/install/elke_ai/lib/python3.12/site-packages/elke-ai.egg-link (link to .)
+[0.698s] Installing elke_ai_bridge script to /home/master/Elke/ros2_ws/install/elke_ai/lib/elke_ai
+[0.698s] 
+[0.698s] Installed /home/master/Elke/ros2_ws/build/elke_ai
+[0.698s] running symlink_data
+[0.712s] Invoked command in '/home/master/Elke/ros2_ws/build/elke_ai' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/master/Elke/ros2_ws/build/elke_ai/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/master/Elke/ros2_ws/install/elke_ai/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/master/Elke/ros2_ws/build/elke_ai/build --no-deps symlink_data

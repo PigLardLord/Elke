@@ -31,5 +31,8 @@ void init_ros_base(
 // Spin helper (non-blocking)
 void spin_executor(rclc_executor_t* executor, unsigned int timeout_ms = 100);
 
+// Wait for micro-ROS Agent
+void wait_for_agent();
+
 // Fatal halt loop
 void error_loop();
