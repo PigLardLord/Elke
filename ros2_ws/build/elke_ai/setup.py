@@ -1,1 +1,0 @@
-/home/master/Elke/ros2_ws/src/elke_ai/setup.py

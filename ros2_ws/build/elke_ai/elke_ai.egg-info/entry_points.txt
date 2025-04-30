@@ -1,2 +1,0 @@
-[console_scripts]
-elke_ai_bridge = elke_ai.elke_ai_bridge_node:main
