@@ -15,11 +15,14 @@ setup(
     zip_safe=True,
     maintainer='master',
     maintainer_email='piglardlord@elkeproject.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='Voice interface for Elke robot',
+    license='Creative Commons Attribution-NonCommercial-ShareAlike 4.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'wake_listener = audio.elke_listener:main',
+            'stt_whisper_node = audio.stt_whisper_node:main',
+            'voice_session_manager = audio.voice_session_manager:main',
         ],
     },
 )
