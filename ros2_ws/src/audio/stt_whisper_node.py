@@ -55,3 +55,10 @@ class WhisperSTTNode(Node):
                     buffer = b''
             except queue.Empty:
                 continue
+    
+def main(args=None):
+    rclpy.init(args=args)
+    node = WhisperSTTNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
