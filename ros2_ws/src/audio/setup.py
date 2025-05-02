@@ -14,7 +14,7 @@ setup(
         ('share/' + package_name, ['package.xml']),
         (
             os.path.join('share', package_name, 'resources'),
-            glob('src/audio/audio/resources/*.ppn')
+            glob('src/audio/resources/*.ppn')
         ),
     ],
     include_package_data=True,
