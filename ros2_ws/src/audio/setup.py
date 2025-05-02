@@ -17,13 +17,13 @@ setup(
             glob(os.path.join('src', package_name, 'resources', '*.ppn')))
     ],
     include_package_data=True,
-    include_package_data=True,
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='master',
     maintainer_email='piglardlord@elkeproject.com',
     description='Voice interface for Elke robot',
     license='Creative Commons Attribution-NonCommercial-ShareAlike 4.0',
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'wake_listener = audio.elke_listener:main',
