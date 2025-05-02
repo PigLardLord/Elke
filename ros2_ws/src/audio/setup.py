@@ -13,8 +13,10 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'resources'),
-            glob(os.path.join('src', package_name, 'resources', '*.ppn')))
+        (
+            os.path.join('share', package_name, 'resources'),
+            glob(os.path.join('src', package_name, package_name, 'resources', '*.ppn'))
+        ),
     ],
     include_package_data=True,
     install_requires=['setuptools'],
