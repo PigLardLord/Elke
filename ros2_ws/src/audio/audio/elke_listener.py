@@ -9,6 +9,7 @@ import pvporcupine
 import pyaudio
 import struct
 from dotenv import load_dotenv
+from ament_index_python.packages import get_package_share_directory
 import os
 
 class WakeWordListener(Node):
@@ -19,14 +20,15 @@ class WakeWordListener(Node):
         load_dotenv(dotenv_path=os.path.expanduser("~/.env_elke"))
         ACCESS_KEY = os.getenv("PORCUPINE_KEY")
 
-        ppn_path = os.path.join(
-            os.path.dirname(__file__),
+        keyword_path = os.path.join(
+            get_package_share_directory('audio'),
+            'resources',
             'hey-elke_it_raspberry-pi_v3_0_0.ppn'
         )
 
         self.porcupine = pvporcupine.create(
             access_key=ACCESS_KEY,
-            keyword_paths=[ppn_path]
+            keyword_paths=[keyword_path]
         )
 
         self.audio = pyaudio.PyAudio()
