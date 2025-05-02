@@ -8,13 +8,27 @@ from std_msgs.msg import String
 import pvporcupine
 import pyaudio
 import struct
+from dotenv import load_dotenv
+import os
 
 class WakeWordListener(Node):
     def __init__(self):
         super().__init__('wake_listener')
         self.publisher_ = self.create_publisher(String, '/wake_word_detected', 10)
 
-        self.porcupine = pvporcupine.create(keywords=['hey-elke_it_raspberry-pi_v3_0_0'])
+        load_dotenv(dotenv_path=os.path.expanduser("~/.env_elke"))
+        ACCESS_KEY = os.getenv("PORCUPINE_KEY")
+
+        ppn_path = os.path.join(
+            os.path.dirname(__file__),
+            'hey-elke_it_raspberry-pi_v3_0_0.ppn'
+        )
+
+        self.porcupine = pvporcupine.create(
+            access_key=ACCESS_KEY,
+            keyword_paths=[ppn_path]
+        )
+
         self.audio = pyaudio.PyAudio()
         self.stream = self.audio.open(
             rate=self.porcupine.sample_rate,
