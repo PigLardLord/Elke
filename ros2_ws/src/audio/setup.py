@@ -1,3 +1,4 @@
+from glob import glob
 from setuptools import find_packages, setup
 
 package_name = 'audio'
@@ -5,12 +6,15 @@ package_name = 'audio'
 setup(
     name=package_name,
     version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    packages=['audio'],
+    package_dir={'': 'src'},
     data_files=[
-        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/resources', ['src/audio/hey-elke_it_raspberry-pi_v3_0_0.ppn']),
+        ('share/' + package_name + '/resources', glob('resources/*.ppn')),
     ],
+    include_package_data=True,
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='master',
