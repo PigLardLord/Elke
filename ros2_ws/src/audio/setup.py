@@ -3,25 +3,20 @@ from glob import glob
 import os
 
 package_name = 'audio'
-this_dir = os.path.abspath(os.path.dirname(__file__))
-
-resource_path = os.path.join(this_dir, package_name, 'resources')
-ppn_files = glob(os.path.join(resource_path, '*.ppn'))
-
-if os.getenv('DEBUG_SETUP') == '1':
-    with open('/tmp/setup_audio_debug.log', 'w') as f:
-        f.write(f"resource_path={resource_path}\n")
-        f.write(f"ppn_files={ppn_files}\n")
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    packages=find_packages(where='src', exclude=['test']),
+    package_dir={'': 'src'},
     data_files=[
         ('share/ament_index/resource_index/packages',
             [f'resource/{package_name}']),
         (f'share/{package_name}', ['package.xml']),
-        (f'share/{package_name}/resources', ppn_files),
+        (
+            f'share/{package_name}/resources',
+            glob(f'src/{package_name}/{package_name}/resources/*.ppn')
+        ),
     ],
     include_package_data=True,
     install_requires=['setuptools'],
@@ -39,3 +34,4 @@ setup(
         ],
     },
 )
+
