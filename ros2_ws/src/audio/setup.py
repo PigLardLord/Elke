@@ -4,20 +4,21 @@ import os
 
 package_name = 'audio'
 
-resource_path = os.path.join('src', package_name, 'resources')
+resource_path = os.path.join('src', package_name, package_name, 'resources')
+ppn_files = glob(os.path.join(resource_path, '*.ppn'))
+
+print("📦 Found .ppn files to include:")
+for f in ppn_files:
+    print("  •", f)
 
 setup(
     name=package_name,
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (
-            os.path.join('share', package_name, 'resources'),
-            glob(os.path.join(resource_path, '*.ppn'))
-        ),
+        ('share/' + package_name + '/resources', ppn_files),
     ],
     include_package_data=True,
     install_requires=['setuptools'],
@@ -35,3 +36,4 @@ setup(
         ],
     },
 )
+
