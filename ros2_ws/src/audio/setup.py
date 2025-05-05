@@ -7,7 +7,7 @@ package_name = 'audio'
 resource_path = os.path.join('src', package_name, package_name, 'resources')
 ppn_files = glob(os.path.join(resource_path, '*.ppn'))
 
-print("📦 Found .ppn files to include:")
+print("Found .ppn files to include:")
 for f in ppn_files:
     print("  •", f)
 
