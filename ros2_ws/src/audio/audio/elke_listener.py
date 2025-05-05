@@ -20,6 +20,12 @@ class WakeWordListener(Node):
         load_dotenv(dotenv_path=os.path.expanduser("~/.env_elke"))
         ACCESS_KEY = os.getenv("PORCUPINE_KEY")
 
+        model_path = os.path.join(
+            get_package_share_directory('audio'),
+            'resources',
+            'porcupine_params_it.pv'
+        )
+
         keyword_path = os.path.join(
             get_package_share_directory('audio'),
             'resources',
@@ -28,7 +34,8 @@ class WakeWordListener(Node):
 
         self.porcupine = pvporcupine.create(
             access_key=ACCESS_KEY,
-            keyword_paths=[keyword_path]
+            keyword_paths=[keyword_path],
+            model_path=model_path
         )
 
         self.audio = pyaudio.PyAudio()
