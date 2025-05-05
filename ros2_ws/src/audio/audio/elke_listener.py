@@ -11,15 +11,20 @@ import struct
 from dotenv import load_dotenv
 from ament_index_python.packages import get_package_share_directory
 import os
+import threading
+import numpy as np
 
 class WakeWordListener(Node):
     def __init__(self):
         super().__init__('wake_listener')
         self.publisher_ = self.create_publisher(String, '/wake_word_detected', 10)
-
         load_dotenv(dotenv_path=os.path.expanduser("~/.env_elke"))
-        ACCESS_KEY = os.getenv("PORCUPINE_KEY")
-
+        self.ACCESS_KEY = os.getenv("PORCUPINE_KEY")
+        self.running = True
+        self.thread = threading.Thread(target=self.detect_wake_word)
+        self.thread.start()
+    
+    def detect_wake_word(self):
         model_path = os.path.join(
             get_package_share_directory('audio'),
             'resources',
@@ -33,7 +38,7 @@ class WakeWordListener(Node):
         )
 
         self.porcupine = pvporcupine.create(
-            access_key=ACCESS_KEY,
+            access_key=self.ACCESS_KEY,
             keyword_paths=[keyword_path],
             model_path=model_path
         )
@@ -47,26 +52,32 @@ class WakeWordListener(Node):
             frames_per_buffer=self.porcupine.frame_length)
 
         self.get_logger().info('🔉 Wake word listener started...')
-        self.timer = self.create_timer(0.1, self.listen_loop)
 
-    def listen_loop(self):
-        self.get_logger().info('🔁 Listening loop triggered')
-        pcm = self.stream.read(self.porcupine.frame_length, exception_on_overflow=False)
-        pcm = struct.unpack_from("h" * self.porcupine.frame_length, pcm)
-        self.get_logger().info(f'📦 Received audio frame of size {len(pcm)}')
-        keyword_index = self.porcupine.process(pcm)
-        self.get_logger().info(f'🔎 Porcupine returned: {keyword_index}')
+        while self.running:
+            pcm = self.stream.read(self.porcupine.frame_length, exception_on_overflow=False)
+            pcm = np.frombuffer(pcm, dtype=np.int16)
+            result = self.porcupine.process(pcm)
+            if result >= 0:
+                self.publisher_.publish(String(data='hey elke'))
 
-        if keyword_index >= 0:
-            msg = String()
-            msg.data = 'hey elke'
-            self.publisher_.publish(msg)
-            self.get_logger().info('🎤 Wake word detected!')
+        self.stream.stop_stream()
+        self.stream.close()
+        self.audio.terminate()
+        self.porcupine.delete()
+
+    def destroy_node(self):
+        self.running = False
+        self.thread.join()
+        super().destroy_node()
 
 
 def main(args=None):
     rclpy.init(args=args)
     node = WakeWordListener()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
