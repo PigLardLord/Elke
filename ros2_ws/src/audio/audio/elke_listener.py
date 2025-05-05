@@ -50,9 +50,12 @@ class WakeWordListener(Node):
         self.timer = self.create_timer(0.1, self.listen_loop)
 
     def listen_loop(self):
+        self.get_logger().info('🔁 Listening loop triggered')
         pcm = self.stream.read(self.porcupine.frame_length, exception_on_overflow=False)
         pcm = struct.unpack_from("h" * self.porcupine.frame_length, pcm)
+        self.get_logger().info(f'📦 Received audio frame of size {len(pcm)}')
         keyword_index = self.porcupine.process(pcm)
+        self.get_logger().info(f'🔎 Porcupine returned: {keyword_index}')
 
         if keyword_index >= 0:
             msg = String()
