@@ -4,7 +4,7 @@ import os
 
 package_name = 'audio'
 
-resource_path = os.path.join('src', package_name, 'resources')
+resource_path = os.path.join('src', package_name, package_name, 'resources')
 ppn_files = glob(os.path.join(resource_path, '*.ppn'))
 
 if os.getenv('DEBUG_SETUP') == '1':
