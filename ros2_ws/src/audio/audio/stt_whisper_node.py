@@ -33,6 +33,7 @@ class WhisperSTTNode(Node):
             if self.stream:
                 self.stream.stop()
                 self.stream.close()
+                self.stream = None
 
     def callback_audio(self, indata, frames, time, status):
         if self.active:

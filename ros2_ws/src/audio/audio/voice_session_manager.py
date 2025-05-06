@@ -42,6 +42,12 @@ class VoiceSessionManager(Node):
         self.deactivate_pub.publish(Bool(data=True))
         self.active = False
 
+    def destroy_node(self):
+        if self.timer:
+            self.timer.cancel()
+        super().destroy_node()
+
+
 
 def main(args=None):
     rclpy.init(args=args)
