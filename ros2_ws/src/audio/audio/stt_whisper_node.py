@@ -5,6 +5,7 @@ import queue
 import sounddevice as sd
 from faster_whisper import WhisperModel
 import threading
+import numpy as np
 
 class WhisperSTTNode(Node):
     def __init__(self):
@@ -47,7 +48,8 @@ class WhisperSTTNode(Node):
             try:
                 buffer += self.audio_queue.get(timeout=1)
                 if len(buffer) > 16000 * 5:  # ~5s
-                    segments, _ = self.model.transcribe(buffer, beam_size=1)
+                    audio_data = np.frombuffer(buffer, np.int16).astype(np.float32) / 32768.0  # normalize to [-1.0, 1.0]
+                    segments, _ = self.model.transcribe(audio_data, beam_size=1)
                     for seg in segments:
                         msg = String()
                         msg.data = seg.text.strip()
