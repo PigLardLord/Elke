@@ -16,7 +16,7 @@ class WhisperSTTNode(Node):
         self.deactivate_sub = self.create_subscription(Bool, '/deactivate_listening_mode', self.deactivate_cb, 10)
 
         self.audio_queue = queue.Queue()
-        self.model = WhisperModel("base.en", compute_type="int8")
+        self.model = WhisperModel("base", compute_type="int8")
         self.stream = None
         self.thread = None
 
@@ -49,7 +49,7 @@ class WhisperSTTNode(Node):
                 buffer += self.audio_queue.get(timeout=1)
                 if len(buffer) > 16000 * 5:  # ~5s
                     audio_data = np.frombuffer(buffer, np.int16).astype(np.float32) / 32768.0  # normalize to [-1.0, 1.0]
-                    segments, _ = self.model.transcribe(audio_data, beam_size=1)
+                    segments, _ = self.model.transcribe(audio_data, beam_size=1, language="it")
                     for seg in segments:
                         msg = String()
                         msg.data = seg.text.strip()
