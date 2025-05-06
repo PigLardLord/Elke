@@ -5,7 +5,7 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='audio',
-            executable='wake_listener_node',
+            executable='wake_listener',
             name='wake_word_node',
             output='screen'
         ),
